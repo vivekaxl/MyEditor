@@ -13,6 +13,9 @@ import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.rules.WordRule;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Display;
 
 
 public class MyCodeScanner extends RuleBasedScanner{
@@ -34,6 +37,9 @@ public class MyCodeScanner extends RuleBasedScanner{
 		IToken type= new Token(new TextAttribute(provider.getColor(MyColorProvider.TYPE), null, Font.BOLD));
 		IToken string= new Token(new TextAttribute(provider.getColor(MyColorProvider.STRING)));
 		IToken other= new Token(new TextAttribute(provider.getColor(MyColorProvider.DEFAULT)));
+		//Sam
+		Color TAG_COLOR =new Color(Display.getCurrent(), new RGB(200, 0, 0));
+		IToken tagToken = new Token(new TextAttribute(TAG_COLOR));
 
 		List<IRule> rules= new ArrayList<IRule>();
 
@@ -53,6 +59,10 @@ public class MyCodeScanner extends RuleBasedScanner{
 		for (int i= 0; i < fgConstants.length; i++)
 			wordRule.addWord(fgConstants[i], type);
 		rules.add(wordRule);
+		
+		//Sam
+		rules.add( new SingleLineRule("<myTag", "myTag>", tagToken));
+		
 
 		IRule[] result= new IRule[rules.size()];
 		rules.toArray(result);

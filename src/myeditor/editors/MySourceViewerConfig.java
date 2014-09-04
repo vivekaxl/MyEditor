@@ -19,24 +19,16 @@ public class MySourceViewerConfig extends SourceViewerConfiguration {
 	public MySourceViewerConfig() {
 
 	}
-
-	protected MyRuleScanner getTagScanner() {
-		if (scanner == null) {
+	protected MyRuleScanner getTagScanner(){
+		MyRuleScanner scanner = null;
+		if(scanner == null){
 			scanner = new MyRuleScanner();
-			scanner.setDefaultReturnToken(
-				new Token(
-					new TextAttribute(
-			DEFAULT_TAG_COLOR)));
+			scanner.setDefaultReturnToken(new Token(new TextAttribute(DEFAULT_TAG_COLOR)));
 		}
 		return scanner;
 	}
-
-	/**
-	 * Define reconciler for MyEditor
-	 */
-	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
-		MyColorProvider provider= MyEditorPlugin.getDefault().getJavaColorProvider();
-		
+	
+	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer){
 		PresentationReconciler reconciler = new PresentationReconciler();
 		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getTagScanner());
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
